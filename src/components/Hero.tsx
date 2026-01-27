@@ -1,6 +1,6 @@
 import { ReceiptEuro } from "lucide-react";
 import DropZone from "@/components/DropeZone";
-import { Button } from "./ui/button";
+import DropZoneBis from "./DropZoneBis";
 
 export default function Hero() {
 	return (
@@ -31,13 +31,13 @@ export default function Hero() {
 				</div>
 				{/* Zone d'upload */}
 				<div className="mb-12">
-					<DropZone />
+					<DropZoneBis />
 				</div>
-				<div>
+				{/* <div>
 					<a href="/facture_demo.pdf" download>
 						<Button className="text-lg">Télécharger une facture de test</Button>
 					</a>
-				</div>
+				</div> */}
 			</div>
 		</>
 	);

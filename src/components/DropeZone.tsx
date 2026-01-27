@@ -28,9 +28,7 @@ export default function DropZone() {
 			<div className="flex flex-col items-center gap-2">
 				{isDragActive ? (
 					<div>
-						<p className="text-2xl tracking-wide">
-							On glisse...
-						</p>
+						<p className="text-2xl tracking-wide">On glisse...</p>
 						<p className="text-lg text-[#8b949e] tracking-wide">
 							...et on relâche
 						</p>
