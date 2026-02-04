@@ -22,6 +22,7 @@ Version de démonstration permettant d'envoyer ou relancer une facture sans cré
 ### 1. Initialisation projet
 
 **Actions :**
+
 - Créer projet Next.js avec App Router
 - Configurer TypeScript
 - Installer Tailwind CSS
@@ -34,6 +35,7 @@ Version de démonstration permettant d'envoyer ou relancer une facture sans cré
 ### 2. Landing page
 
 **Actions :**
+
 - Créer page d'accueil avec accroche claire
 - Ajouter lien de téléchargement d'une facture démo (PDF statique dans `/public`)
 - Intégrer zone de drag & drop pour upload PDF
@@ -45,6 +47,7 @@ Version de démonstration permettant d'envoyer ou relancer une facture sans cré
 ### 3. Upload et validation du PDF
 
 **Actions :**
+
 - Créer API route `/api/upload`
 - Valider que le fichier est un PDF (vérifier MIME type + magic bytes)
 - Limiter la taille (ex: 5 Mo max)
@@ -57,12 +60,14 @@ Version de démonstration permettant d'envoyer ou relancer une facture sans cré
 ### 4. Extraction des données via Claude
 
 **Actions :**
+
 - Créer API route `/api/extract`
 - Envoyer le PDF à Claude API avec prompt d'extraction
 - Extraire : nom client, email client, montant TTC, date échéance, numéro facture
 - Retourner les données au frontend
 
 **Prompt exemple :**
+
 ```
 Lis cette facture et renvoie uniquement un JSON avec : 
 - nom_client
@@ -79,6 +84,7 @@ Lis cette facture et renvoie uniquement un JSON avec :
 ### 5. Détection des anomalies
 
 **Actions :**
+
 - Valider format email (regex)
 - Vérifier cohérence montant (> 0, < seuil raisonnable)
 - Vérifier que la date d'échéance est lisible
@@ -91,6 +97,7 @@ Lis cette facture et renvoie uniquement un JSON avec :
 ### 6. Affichage des données extraites
 
 **Actions :**
+
 - Créer composant d'affichage des infos extraites
 - Afficher les anomalies en warning si présentes
 - Permettre à l'utilisateur de valider avant de continuer
@@ -102,6 +109,7 @@ Lis cette facture et renvoie uniquement un JSON avec :
 ### 7. Choix de l'action (envoi ou relance)
 
 **Actions :**
+
 - Afficher 2 choix principaux : "Envoyer la facture" / "Relancer"
 - Si "Relancer" : calculer le retard (date du jour - date échéance)
 - Afficher les 3 tons avec celui recommandé en surbrillance :
@@ -117,6 +125,7 @@ Lis cette facture et renvoie uniquement un JSON avec :
 ### 8. Génération de l'aperçu email
 
 **Actions :**
+
 - Créer 4 templates d'email (envoi initial + 3 tons de relance)
 - Stocker les templates dans `/templates` (fichiers .ts ou .txt)
 - Injecter les variables : nom, montant, numéro facture, date échéance
@@ -130,6 +139,7 @@ Lis cette facture et renvoie uniquement un JSON avec :
 ### 9. Rate limiting
 
 **Actions :**
+
 - Créer compte Upstash Redis (gratuit)
 - Avant envoi : vérifier le compteur pour l'IP
 - Si >= 3 aujourd'hui : bloquer + message "Limite atteinte, revenez demain"
@@ -143,6 +153,7 @@ Lis cette facture et renvoie uniquement un JSON avec :
 ### 10. Envoi de l'email
 
 **Actions :**
+
 - Créer API route `/api/send`
 - Configurer Nodemailer avec Gmail SMTP
 - Créer l'email :
@@ -153,6 +164,7 @@ Lis cette facture et renvoie uniquement un JSON avec :
 - Envoyer à l'adresse extraite
 
 **Config Gmail requise :**
+
 - Activer 2FA sur le compte Gmail
 - Générer mot de passe d'application
 - Variables env : `GMAIL_USER`, `GMAIL_APP_PASSWORD`
@@ -164,6 +176,7 @@ Lis cette facture et renvoie uniquement un JSON avec :
 ### 11. Confirmation
 
 **Actions :**
+
 - Afficher message de succès : "Email envoyé à [adresse]"
 - Proposer de traiter une nouvelle facture
 - En cas d'erreur : afficher message explicite
@@ -175,6 +188,7 @@ Lis cette facture et renvoie uniquement un JSON avec :
 ### 12. Déploiement
 
 **Actions :**
+
 - Créer projet sur Vercel
 - Configurer variables d'environnement :
   - `ANTHROPIC_API_KEY`

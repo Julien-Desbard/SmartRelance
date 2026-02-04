@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 export default function DropZone() {
 	const [isDragging, setIsDragging] = useState(false);
 
+	// Monitoring drag & drop on the page
 	const handleDragEnter = (e: DragEvent) => {
 		e.preventDefault();
 		setIsDragging(true);
@@ -39,7 +40,7 @@ export default function DropZone() {
 		};
 	}, []);
 
-	// Hook UploadThing pour gérer l'upload vers leur serveur
+	// Setting upLoadthing
 	const { startUpload, isUploading } = useUploadThing("pdfUploader", {
 		onClientUploadComplete: (res) => {
 			console.log("PDF uploadé:", res[0].ufsUrl);
@@ -49,7 +50,6 @@ export default function DropZone() {
 		},
 	});
 
-	// Hook react-dropzone pour gérer le drag & drop
 	const { getRootProps, getInputProps } = useDropzone({
 		accept: { "application/pdf": [".pdf"] },
 		maxFiles: 1,
