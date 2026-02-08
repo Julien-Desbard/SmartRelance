@@ -1,0 +1,83 @@
+name: Front CI/CD Pipeline
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - 'front/**'
+      - '.github/workflows/front-ci-cd.yml'
+  pull_request:
+    branches: ["main"]
+    paths:
+      - 'front/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./front
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+
+      - name: clone repo
+        uses: actions/checkout@v4
+
+      - name: install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
+      - name: install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+          cache-dependency-path: "./front/pnpm-lock.yaml"
+
+      - name: install same json as local
+        run: pnpm install --frozen-lockfile
+
+      - name: Run linter
+        run: pnpm lint
+
+      - name: Run tests 
+        run: pnpm test
+
+  # build:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: ./front
+  #   strategy:
+  #     matrix:
+  #       node-version: [18.x, 20.x, 22.x]
+
+  #   steps:
+  #     - uses: actions/checkout@v4
+
+  #     - name: Install pnpm
+  #       uses: pnpm/action-setup@v4
+  #       with:
+  #         version: 10
+
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #         cache: "pnpm"
+  #         cache-dependency-path: "./back/pnpm-lock.yaml"
+
+  #     - run: pnpm install --frozen-lockfile
+
+  #     - name: Run linter
+  #       run: pnpm lint
+
+  #     - name: Run tests with coverage
+  #       run: pnpm test:coverage
+  #       env:
+  #         NODE_ENV: test
+
